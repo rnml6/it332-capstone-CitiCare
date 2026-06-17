@@ -40,3 +40,18 @@ The system is developed using modern web technologies to ensure scalability, mai
 ### Version Control
 
 * GitHub
+
+## System Development Methodology
+
+This study adopts the *Agile Development Methodology*, specifically the *Scrum Framework*, to guide the design and development of the CitiCare Healthcare Monitoring System. Agile is selected due to its iterative development approach, emphasis on stakeholder collaboration, and ability to accommodate evolving system requirements throughout the development lifecycle.
+
+The development process consists of six phases:
+
+1. *Planning Phase* – Requirements are gathered and analyzed through consultations with Barangay Health Workers (BHWs) to identify functional and non-functional system requirements.
+2. *Design Phase* – The system architecture, database structure, user interface, and overall system design are developed based on the identified requirements.
+3. *Development Phase* – System functionalities are incrementally implemented through Agile sprints, allowing continuous refinement and validation of features.
+4. *Testing Phase* – Functional, integration, and user acceptance testing are conducted to ensure system reliability, accuracy, and usability.
+5. *Deployment Phase* – The completed system is deployed within the operational environment of Barangay Gumamela and prepared for end-user utilization.
+6. *Review Phase* – System performance and effectiveness are evaluated through stakeholder feedback, providing a basis for future enhancements and continuous improvement.
+
+Throughout the development process, Barangay Health Workers actively participate in requirements validation, feature evaluation, and system testing to ensure that the final product accurately reflects the healthcare workflows and operational needs of the barangay.
