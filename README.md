@@ -99,33 +99,3 @@ The master list of every citizen living in the barangay, containing personal det
 * **`contact_number`** (VARCHAR | Nullable) — Personal contact number.
 * **`is_household_head`** (BOOLEAN) — Identifies the main representative of the household unit.
 * **`created_at`** (TIMESTAMP) — Record creation timestamp.
-
-### 3. Focus Groups & Medical Profiles
-
-### `focus_groups`
-A lookup directory for specific health sectors (e.g., Seniors, PWDs, Pregnant Women, Infants).
-* **`id`** (INT | PK, Auto Increment) — Unique identifier for the health sector group.
-* **`group_name`** (VARCHAR) — Name of the sector (e.g., 'Seniors', 'PWD').
-
-### `resident_focus_groups`
-Connects residents to one or more focus groups (e.g., a resident who is both a Senior and a PWD).
-* **`resident_id`** (INT | Composite PK, FK) — References `residents.id`.
-* **`focus_group_id`** (INT | Composite PK, FK) — References `focus_groups.id`.
-
-### `health_profiles`
-Stores a resident's real-time, automatically calculated health risk scores and basic medical status.
-* **`id`** (INT | PK, Auto Increment) — Unique identifier for the profile.
-* **`resident_id`** (INT | FK, Unique) — References `residents.id` (Enforces 1:1 relation).
-* **`blood_type`** (VARCHAR | Nullable) — ABO blood group system typing.
-* **`has_chronic_condition`** (BOOLEAN) — Quick flag for chronic illness tracking.
-* **`current_risk_score`** (DECIMAL) — Calculated real-time risk assessment score.
-* **`risk_level`** (ENUM: 'Low', 'Moderate', 'High') — Evaluated tier based on the risk score.
-* **`last_calculated_at`** (TIMESTAMP) — Timestamp of the last risk engine update.
-
-### `chronic_conditions`
-Records specific medical diagnoses (like Diabetes or Hypertension) tied to a resident's health profile.
-* **`id`** (INT | PK, Auto Increment) — Unique identifier for the condition entry.
-* **`health_profile_id`** (INT | FK) — References `health_profiles.id`.
-* **`disease_name`** (VARCHAR) — Name of the illness (e.g., 'Hypertension').
-* **`date_diagnosed`** (DATE | Nullable) — The date the resident was diagnosed.
-* **`status`** (ENUM: 'Active', 'Managed', 'In Remission') — The clinical state of the condition.
