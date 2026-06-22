@@ -41,69 +41,32 @@ The system is developed using modern web technologies to ensure scalability, mai
 
 * GitHub
 
-## System Development Methodology
+### 3. Focus Groups & Medical Profiles
 
-This study adopts the *Agile Development Methodology*, specifically the *Scrum Framework*, to guide the design and development of the CitiCare Healthcare Monitoring System. Agile is selected due to its iterative development approach, emphasis on stakeholder collaboration, and ability to accommodate evolving system requirements throughout the development lifecycle.
+### `focus_groups`
+A lookup directory for specific health sectors (e.g., Seniors, PWDs, Pregnant Women, Infants).
+* **`id`** (INT | PK, Auto Increment) — Unique identifier for the health sector group.
+* **`group_name`** (VARCHAR) — Name of the sector (e.g., 'Seniors', 'PWD').
 
-The development process consists of six phases:
+### `resident_focus_groups`
+Connects residents to one or more focus groups (e.g., a resident who is both a Senior and a PWD).
+* **`resident_id`** (INT | Composite PK, FK) — References `residents.id`.
+* **`focus_group_id`** (INT | Composite PK, FK) — References `focus_groups.id`.
 
-1. *Planning Phase* – Requirements are gathered and analyzed through consultations with Barangay Health Workers (BHWs) to identify functional and non-functional system requirements.
-2. *Design Phase* – The system architecture, database structure, user interface, and overall system design are developed based on the identified requirements.
-3. *Development Phase* – System functionalities are incrementally implemented through Agile sprints, allowing continuous refinement and validation of features.
-4. *Testing Phase* – Functional, integration, and user acceptance testing are conducted to ensure system reliability, accuracy, and usability.
-5. *Deployment Phase* – The completed system is deployed within the operational environment of Barangay Gumamela and prepared for end-user utilization.
-6. *Review Phase* – System performance and effectiveness are evaluated through stakeholder feedback, providing a basis for future enhancements and continuous improvement.
+### `health_profiles`
+Stores a resident's real-time, automatically calculated health risk scores and basic medical status.
+* **`id`** (INT | PK, Auto Increment) — Unique identifier for the profile.
+* **`resident_id`** (INT | FK, Unique) — References `residents.id` (Enforces 1:1 relation).
+* **`blood_type`** (VARCHAR | Nullable) — ABO blood group system typing.
+* **`has_chronic_condition`** (BOOLEAN) — Quick flag for chronic illness tracking.
+* **`current_risk_score`** (DECIMAL) — Calculated real-time risk assessment score.
+* **`risk_level`** (ENUM: 'Low', 'Moderate', 'High') — Evaluated tier based on the risk score.
+* **`last_calculated_at`** (TIMESTAMP) — Timestamp of the last risk engine update.
 
-Throughout the development process, Barangay Health Workers actively participate in requirements validation, feature evaluation, and system testing to ensure that the final product accurately reflects the healthcare workflows and operational needs of the barangay.
-
-### 4. Dynamic Tracking & History Logs
-
-### `vaccines`
-A Department of Health (DOH) reference list of required vaccines and their total required dosages.
-* **`id`** (INT | PK, Auto Increment) — Unique identifier for the vaccine.
-* **`vaccine_name`** (VARCHAR) — Brand or generic medical name.
-* **`total_doses_required`** (INT) — Full routine dose count required for immunity.
-
-### `child_immunizations`
-Logs when a child receives a vaccine dose, alongside vital stats like weight and temperature at that moment.
-* **`id`** (INT | PK, Auto Increment) — Unique identifier for the immunization record.
-* **`resident_id`** (INT | FK) — References `residents.id`.
-* **`vaccine_id`** (INT | FK) — References `vaccines.id`.
-* **`dose_number`** (INT) — The specific dosage step (e.g., 1st dose, 2nd dose).
-* **`date_administered`** (DATE) — The date the shot was given.
-* **`weight_kg`** (DECIMAL | Nullable) — Child's weight at appointment time.
-* **`temperature`** (DECIMAL | Nullable) — Child's body temperature at appointment time.
-* **`remarks`** (TEXT | Nullable) — Notes regarding side effects or clinical observations.
-
-### `vital_signs`
-Keeps a running history of physical check-up metrics (BP, heart rate, weight) collected by BHWs.
-* **`id`** (INT | PK, Auto Increment) — Unique identifier for the vitals entry.
-* **`resident_id`** (INT | FK) — References `residents.id`.
-* **`recorded_by_bhw_id`** (INT | FK) — References `bhws.id`.
-* **`systolic_bp`** (INT | Nullable) — Upper blood pressure reading.
-* **`diastolic_bp`** (INT | Nullable) — Lower blood pressure reading.
-* **`heart_rate`** (INT | Nullable) — Pulse rate (Beats Per Minute).
-* **`temperature`** (DECIMAL | Nullable) — Body temperature in Celsius.
-* **`weight_kg`** (DECIMAL | Nullable) — Body weight in kilograms.
-* **`height_cm`** (DECIMAL | Nullable) — Body height in centimeters.
-* **`recorded_at`** (TIMESTAMP) — Date and time metrics were extracted.
-
-### `checkups_and_appointments`
-Schedules medical visits and tracks whether patients attended, cancelled, or missed them.
-* **`id`** (INT | PK, Auto Increment) — Unique identifier for the appointment slot.
-* **`resident_id`** (INT | FK) — References `residents.id`.
-* **`purpose`** (VARCHAR) — Reason for clinical encounter.
-* **`scheduled_date`** (DATE) — Target date of the medical appointment.
-* **`status`** (ENUM: 'Pending', 'Completed', 'Missed', 'Cancelled') — Status tracking indicator.
-* **`remarks`** (TEXT | Nullable) — Context notes regarding cancellations or results.
-
-### `medical_histories`
-A unified, chronological timeline that automatically indexes every event (vaccines, vitals, missed appointments) for a quick patient summary.
-* **`id`** (BIGINT | PK, Auto Increment) — Global timeline tracking index identifier.
-* **`resident_id`** (INT | FK) — References `residents.id`.
-* **`event_date`** (DATE) — Exact day the health event occurred.
-* **`event_type`** (ENUM: 'Checkup', 'Vaccination', 'Vital Signs Update', 'Admission', 'Risk Score Change') — Categorization of the log entry.
-* **`description`** (TEXT) — System generated or manually typed abstract summary.
-* **`reference_table`** (VARCHAR) — Name of originating table (Polymorphic tracking).
-* **`reference_id`** (INT) — Matching record ID from originating table.
-* **`created_at`** (TIMESTAMP) — Logging execution timestamp.
+### `chronic_conditions`
+Records specific medical diagnoses (like Diabetes or Hypertension) tied to a resident's health profile.
+* **`id`** (INT | PK, Auto Increment) — Unique identifier for the condition entry.
+* **`health_profile_id`** (INT | FK) — References `health_profiles.id`.
+* **`disease_name`** (VARCHAR) — Name of the illness (e.g., 'Hypertension').
+* **`date_diagnosed`** (DATE | Nullable) — The date the resident was diagnosed.
+* **`status`** (ENUM: 'Active', 'Managed', 'In Remission') — The clinical state of the condition.
