@@ -55,3 +55,47 @@ The development process consists of six phases:
 6. *Review Phase* – System performance and effectiveness are evaluated through stakeholder feedback, providing a basis for future enhancements and continuous improvement.
 
 Throughout the development process, Barangay Health Workers actively participate in requirements validation, feature evaluation, and system testing to ensure that the final product accurately reflects the healthcare workflows and operational needs of the barangay.
+
+## Database Design
+
+### 1. Administrative & Organizational Tables
+
+### `puroks`
+Divides the barangay into its 12 distinct geographic sub-areas and stores a running risk score for each area.
+* **`id`** (INT | PK, Auto Increment) — Unique identifier for each Purok.
+* **`purok_name`** (VARCHAR | Unique) — The name of the geographic area.
+* **`current_risk_score`** (DECIMAL) — A running aggregate risk score for the area.
+
+### `bhws` (Barangay Health Workers)
+Tracks the 12 health workers and restricts each BHW to managing exactly one Purok.
+* **`id`** (INT | PK, Auto Increment) — Unique identifier for each BHW.
+* **`first_name`** (VARCHAR) — First name of the health worker.
+* **`last_name`** (VARCHAR) — Last name of the health worker.
+* **`purok_id`** (INT | FK, Unique) — References `puroks.id` (Enforces 1:1 constraint per BHW).
+* **`contact_number`** (VARCHAR) — Contact details of the worker.
+* **`account_status`** (ENUM: 'Active', 'Inactive') — Current operational status.
+
+### `households`
+Groups family units together under a specific Purok for local tracking.
+* **`id`** (INT | PK, Auto Increment) — Unique identifier for the household.
+* **`household_number`** (VARCHAR | Unique) — Government or local tracking ID for the house.
+* **`purok_id`** (INT | FK) — References `puroks.id`.
+* **`address_details`** (TEXT) — Specific address descriptors (street, block, landmark).
+
+### 2. Core Resident Data
+
+### `residents`
+The master list of every citizen living in the barangay, containing personal details, birth dates (for age grouping), and family roles.
+* **`id`** (INT | PK, Auto Increment) — Unique identifier for the resident.
+* **`household_id`** (INT | FK) — References `households.id`.
+* **`purok_id`** (INT | FK) — References `puroks.id`.
+* **`first_name`** (VARCHAR) — First name.
+* **`middle_name`** (VARCHAR | Nullable) — Middle name.
+* **`last_name`** (VARCHAR) — Last name.
+* **`suffix`** (VARCHAR | Nullable) — Name suffixes (Jr., Sr., III, etc.).
+* **`birth_date`** (DATE) — Used for age calculations and demographic age group sectors.
+* **`sex`** (ENUM: 'Male', 'Female') — Biological sex.
+* **`civil_status`** (ENUM: 'Single', 'Married', 'Widowed', 'Separated') — Legal civil status.
+* **`contact_number`** (VARCHAR | Nullable) — Personal contact number.
+* **`is_household_head`** (BOOLEAN) — Identifies the main representative of the household unit.
+* **`created_at`** (TIMESTAMP) — Record creation timestamp.
