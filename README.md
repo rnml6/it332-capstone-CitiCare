@@ -56,47 +56,54 @@ The development process consists of six phases:
 
 Throughout the development process, Barangay Health Workers actively participate in requirements validation, feature evaluation, and system testing to ensure that the final product accurately reflects the healthcare workflows and operational needs of the barangay.
 
-## Database Design
+### 4. Dynamic Tracking & History Logs
 
-### 1. Administrative & Organizational Tables
+### `vaccines`
+A Department of Health (DOH) reference list of required vaccines and their total required dosages.
+* **`id`** (INT | PK, Auto Increment) — Unique identifier for the vaccine.
+* **`vaccine_name`** (VARCHAR) — Brand or generic medical name.
+* **`total_doses_required`** (INT) — Full routine dose count required for immunity.
 
-### `puroks`
-Divides the barangay into its 12 distinct geographic sub-areas and stores a running risk score for each area.
-* **`id`** (INT | PK, Auto Increment) — Unique identifier for each Purok.
-* **`purok_name`** (VARCHAR | Unique) — The name of the geographic area.
-* **`current_risk_score`** (DECIMAL) — A running aggregate risk score for the area.
+### `child_immunizations`
+Logs when a child receives a vaccine dose, alongside vital stats like weight and temperature at that moment.
+* **`id`** (INT | PK, Auto Increment) — Unique identifier for the immunization record.
+* **`resident_id`** (INT | FK) — References `residents.id`.
+* **`vaccine_id`** (INT | FK) — References `vaccines.id`.
+* **`dose_number`** (INT) — The specific dosage step (e.g., 1st dose, 2nd dose).
+* **`date_administered`** (DATE) — The date the shot was given.
+* **`weight_kg`** (DECIMAL | Nullable) — Child's weight at appointment time.
+* **`temperature`** (DECIMAL | Nullable) — Child's body temperature at appointment time.
+* **`remarks`** (TEXT | Nullable) — Notes regarding side effects or clinical observations.
 
-### `bhws` (Barangay Health Workers)
-Tracks the 12 health workers and restricts each BHW to managing exactly one Purok.
-* **`id`** (INT | PK, Auto Increment) — Unique identifier for each BHW.
-* **`first_name`** (VARCHAR) — First name of the health worker.
-* **`last_name`** (VARCHAR) — Last name of the health worker.
-* **`purok_id`** (INT | FK, Unique) — References `puroks.id` (Enforces 1:1 constraint per BHW).
-* **`contact_number`** (VARCHAR) — Contact details of the worker.
-* **`account_status`** (ENUM: 'Active', 'Inactive') — Current operational status.
+### `vital_signs`
+Keeps a running history of physical check-up metrics (BP, heart rate, weight) collected by BHWs.
+* **`id`** (INT | PK, Auto Increment) — Unique identifier for the vitals entry.
+* **`resident_id`** (INT | FK) — References `residents.id`.
+* **`recorded_by_bhw_id`** (INT | FK) — References `bhws.id`.
+* **`systolic_bp`** (INT | Nullable) — Upper blood pressure reading.
+* **`diastolic_bp`** (INT | Nullable) — Lower blood pressure reading.
+* **`heart_rate`** (INT | Nullable) — Pulse rate (Beats Per Minute).
+* **`temperature`** (DECIMAL | Nullable) — Body temperature in Celsius.
+* **`weight_kg`** (DECIMAL | Nullable) — Body weight in kilograms.
+* **`height_cm`** (DECIMAL | Nullable) — Body height in centimeters.
+* **`recorded_at`** (TIMESTAMP) — Date and time metrics were extracted.
 
-### `households`
-Groups family units together under a specific Purok for local tracking.
-* **`id`** (INT | PK, Auto Increment) — Unique identifier for the household.
-* **`household_number`** (VARCHAR | Unique) — Government or local tracking ID for the house.
-* **`purok_id`** (INT | FK) — References `puroks.id`.
-* **`address_details`** (TEXT) — Specific address descriptors (street, block, landmark).
+### `checkups_and_appointments`
+Schedules medical visits and tracks whether patients attended, cancelled, or missed them.
+* **`id`** (INT | PK, Auto Increment) — Unique identifier for the appointment slot.
+* **`resident_id`** (INT | FK) — References `residents.id`.
+* **`purpose`** (VARCHAR) — Reason for clinical encounter.
+* **`scheduled_date`** (DATE) — Target date of the medical appointment.
+* **`status`** (ENUM: 'Pending', 'Completed', 'Missed', 'Cancelled') — Status tracking indicator.
+* **`remarks`** (TEXT | Nullable) — Context notes regarding cancellations or results.
 
-### 2. Core Resident Data
-
-### `residents`
-The master list of every citizen living in the barangay, containing personal details, birth dates (for age grouping), and family roles.
-* **`id`** (INT | PK, Auto Increment) — Unique identifier for the resident.
-* **`household_id`** (INT | FK) — References `households.id`.
-* **`purok_id`** (INT | FK) — References `puroks.id`.
-* **`first_name`** (VARCHAR) — First name.
-* **`middle_name`** (VARCHAR | Nullable) — Middle name.
-* **`last_name`** (VARCHAR) — Last name.
-* **`suffix`** (VARCHAR | Nullable) — Name suffixes (Jr., Sr., III, etc.).
-* **`birth_date`** (DATE) — Used for age calculations and demographic age group sectors.
-* **`sex`** (ENUM: 'Male', 'Female') — Biological sex.
-* **`civil_status`** (ENUM: 'Single', 'Married', 'Widowed', 'Separated') — Legal civil status.
-* **`contact_number`** (VARCHAR | Nullable) — Personal contact number.
-* **`is_household_head`** (BOOLEAN) — Identifies the main representative of the household unit.
-* **`created_at`** (TIMESTAMP) — Record creation timestamp.
-
+### `medical_histories`
+A unified, chronological timeline that automatically indexes every event (vaccines, vitals, missed appointments) for a quick patient summary.
+* **`id`** (BIGINT | PK, Auto Increment) — Global timeline tracking index identifier.
+* **`resident_id`** (INT | FK) — References `residents.id`.
+* **`event_date`** (DATE) — Exact day the health event occurred.
+* **`event_type`** (ENUM: 'Checkup', 'Vaccination', 'Vital Signs Update', 'Admission', 'Risk Score Change') — Categorization of the log entry.
+* **`description`** (TEXT) — System generated or manually typed abstract summary.
+* **`reference_table`** (VARCHAR) — Name of originating table (Polymorphic tracking).
+* **`reference_id`** (INT) — Matching record ID from originating table.
+* **`created_at`** (TIMESTAMP) — Logging execution timestamp.
