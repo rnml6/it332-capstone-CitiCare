@@ -130,4 +130,4 @@ Records specific medical diagnoses (like Diabetes or Hypertension) tied to a res
 * **`date_diagnosed`** (DATE | Nullable) — The date the resident was diagnosed.
 * **`status`** (ENUM: 'Active', 'Managed', 'In Remission') — The clinical state of the condition.
 
-* **`created_at`** (TIMESTAMP) — Record creation timestamp.
+
