@@ -214,3 +214,29 @@ A unified, chronological timeline that automatically indexes every event (vaccin
 ### 7. Development Dependencies (`devDependencies`)
 * **`nodemon`** – Automatically monitors application file changes and restarts the backend server dynamically during local testing.
 * **`postcss`** & **`autoprefixer`** – Essential parsing and CSS compiling libraries required by Tailwind CSS to optimize, shrink, and clean code for resource-constrained client hardware.
+
+  ## Project Structure
+### Frontend (`citicare-frontend`)
+The frontend is a structured React application built on the Next.js App Router framework. It manages stateful dashboards, client-side data validations, responsive Tailwind CSS layouts, and dynamic visualizations optimized for community health field usage.
+```text
+citicare-frontend/             
+├── public/                    
+├── src/
+│   ├── app/                   
+│   │   ├── dashboard/         
+│   │   └── residents/         
+│   ├── components/            
+│   │   └── ui/                
+│   ├── hooks/                 
+│   ├── lib/                   
+│   ├── styles/                
+│   └── utils/                 
+├── .env.local                 
+├── .gitignore                 
+├── next.config.js             
+├── package.json               
+└── tailwind.config.js
+```
+
+
+* **`postcss`** & **`autoprefixer`** – Essential parsing and CSS compiling libraries required by Tailwind CSS to optimize, shrink, and clean code for resource-constrained client hardware.
