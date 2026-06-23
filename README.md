@@ -130,4 +130,127 @@ Records specific medical diagnoses (like Diabetes or Hypertension) tied to a res
 * **`date_diagnosed`** (DATE | Nullable) — The date the resident was diagnosed.
 * **`status`** (ENUM: 'Active', 'Managed', 'In Remission') — The clinical state of the condition.
 
-* **`created_at`** (TIMESTAMP) — Record creation timestamp.
+### 4. Dynamic Tracking & History Logs
+
+### `vaccines`
+A Department of Health (DOH) reference list of required vaccines and their total required dosages.
+* **`id`** (INT | PK, Auto Increment) — Unique identifier for the vaccine.
+* **`vaccine_name`** (VARCHAR) — Brand or generic medical name.
+* **`total_doses_required`** (INT) — Full routine dose count required for immunity.
+
+### `child_immunizations`
+Logs when a child receives a vaccine dose, alongside vital stats like weight and temperature at that moment.
+* **`id`** (INT | PK, Auto Increment) — Unique identifier for the immunization record.
+* **`resident_id`** (INT | FK) — References `residents.id`.
+* **`vaccine_id`** (INT | FK) — References `vaccines.id`.
+* **`dose_number`** (INT) — The specific dosage step (e.g., 1st dose, 2nd dose).
+* **`date_administered`** (DATE) — The date the shot was given.
+* **`weight_kg`** (DECIMAL | Nullable) — Child's weight at appointment time.
+* **`temperature`** (DECIMAL | Nullable) — Child's body temperature at appointment time.
+* **`remarks`** (TEXT | Nullable) — Notes regarding side effects or clinical observations.
+
+### `vital_signs`
+Keeps a running history of physical check-up metrics (BP, heart rate, weight) collected by BHWs.
+* **`id`** (INT | PK, Auto Increment) — Unique identifier for the vitals entry.
+* **`resident_id`** (INT | FK) — References `residents.id`.
+* **`recorded_by_bhw_id`** (INT | FK) — References `bhws.id`.
+* **`systolic_bp`** (INT | Nullable) — Upper blood pressure reading.
+* **`diastolic_bp`** (INT | Nullable) — Lower blood pressure reading.
+* **`heart_rate`** (INT | Nullable) — Pulse rate (Beats Per Minute).
+* **`temperature`** (DECIMAL | Nullable) — Body temperature in Celsius.
+* **`weight_kg`** (DECIMAL | Nullable) — Body weight in kilograms.
+* **`height_cm`** (DECIMAL | Nullable) — Body height in centimeters.
+* **`recorded_at`** (TIMESTAMP) — Date and time metrics were extracted.
+
+### `checkups_and_appointments`
+Schedules medical visits and tracks whether patients attended, cancelled, or missed them.
+* **`id`** (INT | PK, Auto Increment) — Unique identifier for the appointment slot.
+* **`resident_id`** (INT | FK) — References `residents.id`.
+* **`purpose`** (VARCHAR) — Reason for clinical encounter.
+* **`scheduled_date`** (DATE) — Target date of the medical appointment.
+* **`status`** (ENUM: 'Pending', 'Completed', 'Missed', 'Cancelled') — Status tracking indicator.
+* **`remarks`** (TEXT | Nullable) — Context notes regarding cancellations or results.
+
+### `medical_histories`
+A unified, chronological timeline that automatically indexes every event (vaccines, vitals, missed appointments) for a quick patient summary.
+* **`id`** (BIGINT | PK, Auto Increment) — Global timeline tracking index identifier.
+* **`resident_id`** (INT | FK) — References `residents.id`.
+* **`event_date`** (DATE) — Exact day the health event occurred.
+* **`event_type`** (ENUM: 'Checkup', 'Vaccination', 'Vital Signs Update', 'Admission', 'Risk Score Change') — Categorization of the log entry.
+* **`description`** (TEXT) — System generated or manually typed abstract summary.
+* **`reference_table`** (VARCHAR) — Name of originating table (Polymorphic tracking).
+* **`reference_id`** (INT) — Matching record ID from originating table.
+* **`created_at`** (TIMESTAMP) — Logging execution timestamp.
+
+## System Dependencies
+### 1. Core Framework & UI (Next.js, React, & Tailwind)
+* **`next`** – The core full-stack React framework providing hybrid rendering and built-in API routes.
+* **`react`** & **`react-dom`** – The underlying UI library for building modular, stateful dashboard components.
+* **`tailwindcss`** – A utility-first CSS framework for creating clean, mobile-responsive interfaces for BHWs.
+* **`lucide-react`** – A modern, lightweight icon library for navigation menus, status tags, and health indicators.
+* **`recharts`** – A composable charting library built on React components to render real-time Purok risk distributions and disease trends.
+
+### 2. Backend, Routing & Server Environment (Node.js & Express)
+* **`express`** – Fast, unopinionated minimalist web framework used to spin up a dedicated custom backend server alongside Next.js.
+* **`cors`** – Enables Cross-Origin Resource Sharing, allowing your user interface to communicate securely with your backend server.
+* **`dotenv`** – Loads system configurations from a `.env` file to protect secret keys (e.g., Supabase credentials, DeepSeek API keys).
+* **`node-cron`** – A pure JavaScript task scheduler used to run background jobs (e.g., automated monthly data compiling for the `monthly_purok_analytics` table).
+
+### 3. Database, Real-Time & Authentication (Supabase & PostgreSQL)
+* **`@supabase/supabase-js`** – The official isomorphic client library connecting the application directly to the PostgreSQL instance to handle user session logins, data transactions, and real-time record synchronization.
+
+### 4. AI Engine Processing (DeepSeek AI Integration)
+* **`openai`** – The official SDK used to interface seamlessly with DeepSeek's OpenAI-compatible endpoints to feed prompt histories and fetch structured community health recommendations.
+
+### 5. API Security & Request Handling
+* **`helmet`** – Helps secure the Express server by setting various crucial HTTP headers to protect sensitive resident health records.
+* **`morgan`** – An HTTP request logger middleware for Node.js, essential for tracking down broken API routes and diagnostic debugging during development.
+
+### 6. Data Validation, Forms, & Utilities
+* **`zod`** – A TypeScript-first schema declaration and validation library to ensure corrupted, empty, or incorrectly formatted medical records never hit your database.
+* **`react-hook-form`** – Efficient, flexible, and extensible form state manager that speeds up rendering times on slow data connections.
+* **`date-fns`** – A lightweight utility set for parsing and formatting dates, used to calculate structural demographic sectors (e.g., separating infants from senior citizens via birthdates).
+
+### 7. Development Dependencies (`devDependencies`)
+* **`nodemon`** – Automatically monitors application file changes and restarts the backend server dynamically during local testing.
+* **`postcss`** & **`autoprefixer`** – Essential parsing and CSS compiling libraries required by Tailwind CSS to optimize, shrink, and clean code for resource-constrained client hardware.
+
+  ## Project Structure
+### Frontend (`citicare-frontend`)
+The frontend is a structured React application built on the Next.js App Router framework. It manages stateful dashboards, client-side data validations, responsive Tailwind CSS layouts, and dynamic visualizations optimized for community health field usage.
+```text
+citicare-frontend/             
+├── public/                    
+├── src/
+│   ├── app/                   
+│   │   ├── dashboard/         
+│   │   └── residents/         
+│   ├── components/            
+│   │   └── ui/                
+│   ├── hooks/                 
+│   ├── lib/                   
+│   ├── styles/                
+│   └── utils/                 
+├── .env.local                 
+├── .gitignore                 
+├── next.config.js             
+├── package.json               
+└── tailwind.config.js
+```
+### Backend (`citicare-backend`)
+The backend is an event-driven Node.js runtime operating an Express.js API server wrapper. It interfaces securely with Supabase to execute queries, runs background cron schedulers for demographic metrics, and routes operational prompts through DeepThink/DeepSeek AI.
+```text
+citicare-backend/              
+├── config/                    
+├── controllers/               
+├── middleware/                
+├── routes/                    
+├── services/                  
+├── utils/                     
+├── .env                       
+├── .gitignore                 
+├── package.json               
+└── server.js
+```
+
+
