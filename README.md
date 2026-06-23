@@ -237,6 +237,23 @@ citicare-frontend/
 ├── package.json               
 └── tailwind.config.js
 ```
+### Backend (`citicare-backend`)
+The backend is an event-driven Node.js runtime operating an Express.js API server wrapper. It interfaces securely with Supabase to execute queries, runs background cron schedulers for demographic metrics, and routes operational prompts through DeepThink/DeepSeek AI.
+```text
+citicare-backend/              
+├── config/                    
+├── controllers/               
+├── middleware/                
+├── routes/                    
+├── services/                  
+├── utils/                     
+├── .env                       
+├── .gitignore                 
+├── package.json               
+└── server.js
+```
+
+
 
 
 * **`postcss`** & **`autoprefixer`** – Essential parsing and CSS compiling libraries required by Tailwind CSS to optimize, shrink, and clean code for resource-constrained client hardware.
