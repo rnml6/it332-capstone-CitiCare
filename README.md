@@ -254,3 +254,6 @@ citicare-backend/
 ```
 
 
+
+
+* **`postcss`** & **`autoprefixer`** – Essential parsing and CSS compiling libraries required by Tailwind CSS to optimize, shrink, and clean code for resource-constrained client hardware.
