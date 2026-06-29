@@ -6,20 +6,24 @@ CitiCare: Barangay Gumamela Healthcare Monitoring System is a web-based healthca
 
 A key component of the system is its AI-powered recommendation functionality, which analyzes resident health data to identify priority cases, detect emerging disease trends, classify residents and puroks according to health-related indicators, and forecast medicine demand. By transforming healthcare data into actionable insights, the system supports proactive healthcare planning, resource allocation, and community health interventions.
 
-Main Features
+# Main Features
+
 The CitiCare system provides the following core functionalities:
 
-- Resident Classification and Prioritization** – Categorizes residents based on health-related factors to assist healthcare workers in identifying priority cases and allocating resources effectively.
+- **Resident Classification and Prioritization** – Categorizes residents based on health-related factors to assist healthcare workers in identifying priority cases and allocating resources effectively.
   
-- Data Analytics and Health Monitoring** – Analyzes collected health data to identify trends, patterns, and potential health risks within the community.
--  
-- Report Generation** – Generates comprehensive reports to support monitoring, evaluation, and decision-making processes for healthcare programs and services.
+- **Data Analytics and Health Monitoring** – Analyzes collected health data to identify trends, patterns, and potential health risks within the community.
+  
+- **Report Generation** – Generates comprehensive reports to support monitoring, evaluation, and decision-making processes for healthcare programs and services.
 
 ## System Architecture and Technologies
 
-**Resident Classification and Prioritization – Categorizes residents based on health-related factors to assist healthcare workers in identifying priority cases and allocating resources effectively.
-Data Analytics and Health Monitoring – Analyzes collected health data to identify trends, patterns, and potential health risks within the community.
-Report Generation – Generates comprehensive reports to support monitoring, evaluation, and decision-making processes for healthcare programs and services.
+**Resident Classification and Prioritization** – Categorizes residents based on health-related factors to assist healthcare workers in identifying priority cases and allocating resources effectively.
+
+**Data Analytics and Health Monitoring** – Analyzes collected health data to identify trends, patterns, and potential health risks within the community.
+
+**Report Generation** – Generates comprehensive reports to support monitoring, evaluation, and decision-making processes for healthcare programs and services.
+
 System Architecture and Technologies
 The system is developed using modern web technologies to ensure scalability, maintainability, and performance.
 
@@ -43,19 +47,24 @@ This study adopts the Agile Development Methodology, specifically the Scrum Fram
 - Next.js
 The development process consists of six phases:
 
-Planning Phase - Requirements are gathered and analyzed through consultations with Barangay Health Workers (BHWs) to identify functional and non-functional system requirements.
-Design Phase – The system architecture, database structure, user interface, and overall system design are developed based on the identified requirements.
+**Planning Phase** - Requirements are gathered and analyzed through consultations with Barangay Health Workers (BHWs) to identify functional and non-functional system requirements.
+
+**Design Phase** – The system architecture, database structure, user interface, and overall system design are developed based on the identified requirements.
 Development Phase – System functionalities are incrementally implemented through Agile sprints, allowing continuous refinement and validation of features.
-Testing Phase – Functional, integration, and user acceptance testing are conducted to ensure system reliability, accuracy, and usability.
-Deployment Phase – The completed system is deployed within the operational environment of Barangay Gumamela and prepared for end-user utilization.
-Review Phase – System performance and effectiveness are evaluated through stakeholder feedback, providing a basis for future enhancements and continuous improvement.
+
+**Testing Phase** – Functional, integration, and user acceptance testing are conducted to ensure system reliability, accuracy, and usability.
+
+**Deployment Phase** – The completed system is deployed within the operational environment of Barangay Gumamela and prepared for end-user utilization.
+
+**Review Phase** – System performance and effectiveness are evaluated through stakeholder feedback, providing a basis for future enhancements and continuous improvement.
+
 Throughout the development process, Barangay Health Workers actively participate in requirements validation, feature evaluation, and system testing to ensure that the final product accurately reflects the healthcare workflows and operational needs of the barangay.
 
 - Node.js
 - JavaScript
 Database Design
 
-**1. Administrative & Organizational Tables
+# 1. Administrative & Organizational Tables
 puroks
 
 Divides the barangay into its 12 distinct geographic sub-areas and stores a running risk score for each area.
@@ -81,7 +90,7 @@ household_number (VARCHAR | Unique) — Government or local tracking ID for the 
 purok_id (INT | FK) — References puroks.id.
 address_details (TEXT) — Specific address descriptors (street, block, landmark).
 
-**2. Core Resident Data
+# 2. Core Resident Data
 
 residents
 The master list of every citizen living in the barangay, containing personal details, birth dates (for age grouping), and family roles.
@@ -343,30 +352,32 @@ description (TEXT) — System generated or manually typed abstract summary.
 reference_table (VARCHAR) — Name of originating table (Polymorphic tracking).
 reference_id (INT) — Matching record ID from originating table.
 created_at (TIMESTAMP) — Logging execution timestamp.
-System Dependencies
+
+# System Dependencies
 1. Core Framework & UI (Next.js, React, & Tailwind)
 next – The core full-stack React framework providing hybrid rendering and built-in API routes.
 react & react-dom – The underlying UI library for building modular, stateful dashboard components.
 tailwindcss – A utility-first CSS framework for creating clean, mobile-responsive interfaces for BHWs.
 lucide-react – A modern, lightweight icon library for navigation menus, status tags, and health indicators.
 recharts – A composable charting library built on React components to render real-time Purok risk distributions and disease trends.
-2. Backend, Routing & Server Environment (Node.js & Express)
+
+3. Backend, Routing & Server Environment (Node.js & Express)
 express – Fast, unopinionated minimalist web framework used to spin up a dedicated custom backend server alongside Next.js.
 cors – Enables Cross-Origin Resource Sharing, allowing your user interface to communicate securely with your backend server.
 dotenv – Loads system configurations from a .env file to protect secret keys (e.g., Supabase credentials, DeepSeek API keys).
 node-cron – A pure JavaScript task scheduler used to run background jobs (e.g., automated monthly data compiling for the monthly_purok_analytics table).
-3. Database, Real-Time & Authentication (Supabase & PostgreSQL)
+4. Database, Real-Time & Authentication (Supabase & PostgreSQL)
 @supabase/supabase-js – The official isomorphic client library connecting the application directly to the PostgreSQL instance to handle user session logins, data transactions, and real-time record synchronization.
-4. AI Engine Processing (DeepSeek AI Integration)
+5. AI Engine Processing (DeepSeek AI Integration)
 openai – The official SDK used to interface seamlessly with DeepSeek's OpenAI-compatible endpoints to feed prompt histories and fetch structured community health recommendations.
-5. API Security & Request Handling
+6. API Security & Request Handling
 helmet – Helps secure the Express server by setting various crucial HTTP headers to protect sensitive resident health records.
 morgan – An HTTP request logger middleware for Node.js, essential for tracking down broken API routes and diagnostic debugging during development.
-6. Data Validation, Forms, & Utilities
+7. Data Validation, Forms, & Utilities
 zod – A TypeScript-first schema declaration and validation library to ensure corrupted, empty, or incorrectly formatted medical records never hit your database.
 react-hook-form – Efficient, flexible, and extensible form state manager that speeds up rendering times on slow data connections.
 date-fns – A lightweight utility set for parsing and formatting dates, used to calculate structural demographic sectors (e.g., separating infants from senior citizens via birthdates).
-7. Development Dependencies (devDependencies)
+8. Development Dependencies (devDependencies)
 nodemon – Automatically monitors application file changes and restarts the backend server dynamically during local testing.
 postcss & autoprefixer – Essential parsing and CSS compiling libraries required by Tailwind CSS to optimize, shrink, and clean code for resource-constrained client hardware.
 Project Setup
