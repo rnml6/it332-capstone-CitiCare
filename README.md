@@ -50,7 +50,8 @@ The development process consists of six phases:
 **Planning Phase** - Requirements are gathered and analyzed through consultations with Barangay Health Workers (BHWs) to identify functional and non-functional system requirements.
 
 **Design Phase** – The system architecture, database structure, user interface, and overall system design are developed based on the identified requirements.
-Development Phase – System functionalities are incrementally implemented through Agile sprints, allowing continuous refinement and validation of features.
+
+**Development Phase** – System functionalities are incrementally implemented through Agile sprints, allowing continuous refinement and validation of features.
 
 **Testing Phase** – Functional, integration, and user acceptance testing are conducted to ensure system reliability, accuracy, and usability.
 
@@ -354,34 +355,41 @@ reference_id (INT) — Matching record ID from originating table.
 created_at (TIMESTAMP) — Logging execution timestamp.
 
 # System Dependencies
-1. Core Framework & UI (Next.js, React, & Tailwind)
+
+1. **Core Framework & UI (Next.js, React, & Tailwind)**
 next – The core full-stack React framework providing hybrid rendering and built-in API routes.
 react & react-dom – The underlying UI library for building modular, stateful dashboard components.
 tailwindcss – A utility-first CSS framework for creating clean, mobile-responsive interfaces for BHWs.
 lucide-react – A modern, lightweight icon library for navigation menus, status tags, and health indicators.
 recharts – A composable charting library built on React components to render real-time Purok risk distributions and disease trends.
 
-3. Backend, Routing & Server Environment (Node.js & Express)
+2. **Backend, Routing & Server Environment (Node.js & Express)**
 express – Fast, unopinionated minimalist web framework used to spin up a dedicated custom backend server alongside Next.js.
 cors – Enables Cross-Origin Resource Sharing, allowing your user interface to communicate securely with your backend server.
 dotenv – Loads system configurations from a .env file to protect secret keys (e.g., Supabase credentials, DeepSeek API keys).
 node-cron – A pure JavaScript task scheduler used to run background jobs (e.g., automated monthly data compiling for the monthly_purok_analytics table).
-4. Database, Real-Time & Authentication (Supabase & PostgreSQL)
+
+3. **Database, Real-Time & Authentication (Supabase & PostgreSQL)**
 @supabase/supabase-js – The official isomorphic client library connecting the application directly to the PostgreSQL instance to handle user session logins, data transactions, and real-time record synchronization.
-5. AI Engine Processing (DeepSeek AI Integration)
+
+4. **AI Engine Processing (DeepSeek AI Integration)**
 openai – The official SDK used to interface seamlessly with DeepSeek's OpenAI-compatible endpoints to feed prompt histories and fetch structured community health recommendations.
-6. API Security & Request Handling
+
+5. **API Security & Request Handling**
 helmet – Helps secure the Express server by setting various crucial HTTP headers to protect sensitive resident health records.
 morgan – An HTTP request logger middleware for Node.js, essential for tracking down broken API routes and diagnostic debugging during development.
-7. Data Validation, Forms, & Utilities
+
+6. **Data Validation, Forms, & Utilities**
 zod – A TypeScript-first schema declaration and validation library to ensure corrupted, empty, or incorrectly formatted medical records never hit your database.
 react-hook-form – Efficient, flexible, and extensible form state manager that speeds up rendering times on slow data connections.
 date-fns – A lightweight utility set for parsing and formatting dates, used to calculate structural demographic sectors (e.g., separating infants from senior citizens via birthdates).
-8. Development Dependencies (devDependencies)
+
+7. **Development Dependencies**(devDependencies)
 nodemon – Automatically monitors application file changes and restarts the backend server dynamically during local testing.
 postcss & autoprefixer – Essential parsing and CSS compiling libraries required by Tailwind CSS to optimize, shrink, and clean code for resource-constrained client hardware.
+
 Project Setup
-1. Database Setup (Supabase)
+1. **Database Setup (Supabase)**
 The application uses Supabase as its backend database and authentication provider.
 
 Step 1: Create a Supabase Project
