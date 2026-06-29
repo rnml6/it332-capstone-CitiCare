@@ -215,6 +215,35 @@ A unified, chronological timeline that automatically indexes every event (vaccin
 * **`nodemon`** – Automatically monitors application file changes and restarts the backend server dynamically during local testing.
 * **`postcss`** & **`autoprefixer`** – Essential parsing and CSS compiling libraries required by Tailwind CSS to optimize, shrink, and clean code for resource-constrained client hardware.
 
+# Project Setup
+# 1. Database Setup (Supabase)
+The application uses **Supabase** as its backend database and authentication provider.
+## Step 1: Create a Supabase Project
+1. Sign in to the **Supabase Dashboard**.
+2. Click **New Project**.
+3. Enter your project details and wait for the project to finish provisioning.
+---
+## Step 2: Retrieve API Credentials
+Navigate to:
+**Settings → API**
+Copy the following values:
+- **Project URL**
+- **Anon (Public) Key**
+- **Service Role Key**
+These credentials will be used by the frontend and backend.
+---
+## Step 3: Initialize the Database Schema
+1. Open the **SQL Editor**.
+2. Create a new query.
+3. Paste the project's SQL schema.
+4. Click **Run** to create the required tables, indexes, and relationships.
+---
+## Step 4: Configure Row Level Security (RLS)
+After the tables have been created:
+- Enable **Row Level Security (RLS)** on all tables.
+- Create the necessary RLS policies based on your application's access requirements.
+- Verify that unauthorized users cannot directly access protected data.
+---
   ## Project Structure
 ### Frontend (`citicare-frontend`)
 The frontend is a structured React application built on the Next.js App Router framework. It manages stateful dashboards, client-side data validations, responsive Tailwind CSS layouts, and dynamic visualizations optimized for community health field usage.
