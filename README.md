@@ -9,9 +9,11 @@ A key component of the system is its AI-powered recommendation functionality, wh
 Main Features
 The CitiCare system provides the following core functionalities:
 
-- **Resident Classification and Prioritization** – Categorizes residents based on health-related factors to assist healthcare workers in identifying priority cases and allocating resources effectively.
-- **Data Analytics and Health Monitoring** – Analyzes collected health data to identify trends, patterns, and potential health risks within the community.
-- **Report Generation** – Generates comprehensive reports to support monitoring, evaluation, and decision-making processes for healthcare programs and services.
+- Resident Classification and Prioritization** – Categorizes residents based on health-related factors to assist healthcare workers in identifying priority cases and allocating resources effectively.
+  
+- Data Analytics and Health Monitoring** – Analyzes collected health data to identify trends, patterns, and potential health risks within the community.
+-  
+- Report Generation** – Generates comprehensive reports to support monitoring, evaluation, and decision-making processes for healthcare programs and services.
 
 ## System Architecture and Technologies
 
