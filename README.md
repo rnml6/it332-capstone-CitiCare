@@ -226,6 +226,79 @@ Create the necessary RLS policies based on your application's access requirement
 Verify that unauthorized users cannot directly access protected data.
 Project Structure
 Frontend (citicare-frontend)
+* **`id`** (BIGINT | PK, Auto Increment) — Global timeline tracking index identifier.
+* **`resident_id`** (INT | FK) — References `residents.id`.
+* **`event_date`** (DATE) — Exact day the health event occurred.
+* **`event_type`** (ENUM: 'Checkup', 'Vaccination', 'Vital Signs Update', 'Admission', 'Risk Score Change') — Categorization of the log entry.
+* **`description`** (TEXT) — System generated or manually typed abstract summary.
+* **`reference_table`** (VARCHAR) — Name of originating table (Polymorphic tracking).
+* **`reference_id`** (INT) — Matching record ID from originating table.
+* **`created_at`** (TIMESTAMP) — Logging execution timestamp.
+
+## System Dependencies
+### 1. Core Framework & UI (Next.js, React, & Tailwind)
+* **`next`** – The core full-stack React framework providing hybrid rendering and built-in API routes.
+* **`react`** & **`react-dom`** – The underlying UI library for building modular, stateful dashboard components.
+* **`tailwindcss`** – A utility-first CSS framework for creating clean, mobile-responsive interfaces for BHWs.
+* **`lucide-react`** – A modern, lightweight icon library for navigation menus, status tags, and health indicators.
+* **`recharts`** – A composable charting library built on React components to render real-time Purok risk distributions and disease trends.
+
+### 2. Backend, Routing & Server Environment (Node.js & Express)
+* **`express`** – Fast, unopinionated minimalist web framework used to spin up a dedicated custom backend server alongside Next.js.
+* **`cors`** – Enables Cross-Origin Resource Sharing, allowing your user interface to communicate securely with your backend server.
+* **`dotenv`** – Loads system configurations from a `.env` file to protect secret keys (e.g., Supabase credentials, DeepSeek API keys).
+* **`node-cron`** – A pure JavaScript task scheduler used to run background jobs (e.g., automated monthly data compiling for the `monthly_purok_analytics` table).
+
+### 3. Database, Real-Time & Authentication (Supabase & PostgreSQL)
+* **`@supabase/supabase-js`** – The official isomorphic client library connecting the application directly to the PostgreSQL instance to handle user session logins, data transactions, and real-time record synchronization.
+
+### 4. AI Engine Processing (DeepSeek AI Integration)
+* **`openai`** – The official SDK used to interface seamlessly with DeepSeek's OpenAI-compatible endpoints to feed prompt histories and fetch structured community health recommendations.
+
+### 5. API Security & Request Handling
+* **`helmet`** – Helps secure the Express server by setting various crucial HTTP headers to protect sensitive resident health records.
+* **`morgan`** – An HTTP request logger middleware for Node.js, essential for tracking down broken API routes and diagnostic debugging during development.
+
+### 6. Data Validation, Forms, & Utilities
+* **`zod`** – A TypeScript-first schema declaration and validation library to ensure corrupted, empty, or incorrectly formatted medical records never hit your database.
+* **`react-hook-form`** – Efficient, flexible, and extensible form state manager that speeds up rendering times on slow data connections.
+* **`date-fns`** – A lightweight utility set for parsing and formatting dates, used to calculate structural demographic sectors (e.g., separating infants from senior citizens via birthdates).
+
+### 7. Development Dependencies (`devDependencies`)
+* **`nodemon`** – Automatically monitors application file changes and restarts the backend server dynamically during local testing.
+* **`postcss`** & **`autoprefixer`** – Essential parsing and CSS compiling libraries required by Tailwind CSS to optimize, shrink, and clean code for resource-constrained client hardware.
+
+# Project Setup
+# 1. Database Setup (Supabase)
+The application uses **Supabase** as its backend database and authentication provider.
+## Step 1: Create a Supabase Project
+1. Sign in to the **Supabase Dashboard**.
+2. Click **New Project**.
+3. Enter your project details and wait for the project to finish provisioning.
+---
+## Step 2: Retrieve API Credentials
+Navigate to:
+**Settings → API**
+Copy the following values:
+- **Project URL**
+- **Anon (Public) Key**
+- **Service Role Key**
+These credentials will be used by the frontend and backend.
+---
+## Step 3: Initialize the Database Schema
+1. Open the **SQL Editor**.
+2. Create a new query.
+3. Paste the project's SQL schema.
+4. Click **Run** to create the required tables, indexes, and relationships.
+---
+## Step 4: Configure Row Level Security (RLS)
+After the tables have been created:
+- Enable **Row Level Security (RLS)** on all tables.
+- Create the necessary RLS policies based on your application's access requirements.
+- Verify that unauthorized users cannot directly access protected data.
+---
+  ## Project Structure
+### Frontend (`citicare-frontend`)
 The frontend is a structured React application built on the Next.js App Router framework. It manages stateful dashboards, client-side data validations, responsive Tailwind CSS layouts, and dynamic visualizations optimized for community health field usage.
 
 citicare-frontend/             
