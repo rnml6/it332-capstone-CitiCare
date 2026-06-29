@@ -396,6 +396,7 @@ Step 1: Create a Supabase Project
 Sign in to the Supabase Dashboard.
 Click New Project.
 Enter your project details and wait for the project to finish provisioning.
+
 Step 2: Retrieve API Credentials
 Navigate to: Settings → API Copy the following values:
 
@@ -407,12 +408,14 @@ Open the SQL Editor.
 Create a new query.
 Paste the project's SQL schema.
 Click Run to create the required tables, indexes, and relationships.
+
 Step 4: Configure Row Level Security (RLS)
 After the tables have been created:
 
 Enable Row Level Security (RLS) on all tables.
 Create the necessary RLS policies based on your application's access requirements.
 Verify that unauthorized users cannot directly access protected data.
+
 Project Structure
 Frontend (citicare-frontend)
 * **`id`** (BIGINT | PK, Auto Increment) — Global timeline tracking index identifier.
