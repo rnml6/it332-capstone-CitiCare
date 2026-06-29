@@ -244,3 +244,45 @@ After the tables have been created:
 - Create the necessary RLS policies based on your application's access requirements.
 - Verify that unauthorized users cannot directly access protected data.
 ---
+  ## Project Structure
+### Frontend (`citicare-frontend`)
+The frontend is a structured React application built on the Next.js App Router framework. It manages stateful dashboards, client-side data validations, responsive Tailwind CSS layouts, and dynamic visualizations optimized for community health field usage.
+```text
+citicare-frontend/             
+├── public/                    
+├── src/
+│   ├── app/                   
+│   │   ├── dashboard/         
+│   │   └── residents/         
+│   ├── components/            
+│   │   └── ui/                
+│   ├── hooks/                 
+│   ├── lib/                   
+│   ├── styles/                
+│   └── utils/                 
+├── .env.local                 
+├── .gitignore                 
+├── next.config.js             
+├── package.json               
+└── tailwind.config.js
+```
+### Backend (`citicare-backend`)
+The backend is an event-driven Node.js runtime operating an Express.js API server wrapper. It interfaces securely with Supabase to execute queries, runs background cron schedulers for demographic metrics, and routes operational prompts through DeepThink/DeepSeek AI.
+```text
+citicare-backend/              
+├── config/                    
+├── controllers/               
+├── middleware/                
+├── routes/                    
+├── services/                  
+├── utils/                     
+├── .env                       
+├── .gitignore                 
+├── package.json               
+└── server.js
+```
+
+
+
+
+* **`postcss`** & **`autoprefixer`** – Essential parsing and CSS compiling libraries required by Tailwind CSS to optimize, shrink, and clean code for resource-constrained client hardware.
