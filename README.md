@@ -1,21 +1,29 @@
 # CitiCare: Barangay Gumamela Healthcare Monitoring System
-System Description
+
+# System Description
+
 CitiCare: Barangay Gumamela Healthcare Monitoring System is a web-based healthcare information management system designed to improve the efficiency and effectiveness of healthcare service delivery within Barangay Gumamela. The system facilitates the centralized management of resident health records, enabling Barangay Health Workers (BHWs) to monitor health conditions, track patient information, and support evidence-based decision-making.
 
 A key component of the system is its AI-powered recommendation functionality, which analyzes resident health data to identify priority cases, detect emerging disease trends, classify residents and puroks according to health-related indicators, and forecast medicine demand. By transforming healthcare data into actionable insights, the system supports proactive healthcare planning, resource allocation, and community health interventions.
 
-Main Features
+# Main Features
+
 The CitiCare system provides the following core functionalities:
 
 - **Resident Classification and Prioritization** – Categorizes residents based on health-related factors to assist healthcare workers in identifying priority cases and allocating resources effectively.
+  
 - **Data Analytics and Health Monitoring** – Analyzes collected health data to identify trends, patterns, and potential health risks within the community.
+  
 - **Report Generation** – Generates comprehensive reports to support monitoring, evaluation, and decision-making processes for healthcare programs and services.
 
 ## System Architecture and Technologies
 
-**Resident Classification and Prioritization – Categorizes residents based on health-related factors to assist healthcare workers in identifying priority cases and allocating resources effectively.
-Data Analytics and Health Monitoring – Analyzes collected health data to identify trends, patterns, and potential health risks within the community.
-Report Generation – Generates comprehensive reports to support monitoring, evaluation, and decision-making processes for healthcare programs and services.
+**Resident Classification and Prioritization** – Categorizes residents based on health-related factors to assist healthcare workers in identifying priority cases and allocating resources effectively.
+
+**Data Analytics and Health Monitoring** – Analyzes collected health data to identify trends, patterns, and potential health risks within the community.
+
+**Report Generation** – Generates comprehensive reports to support monitoring, evaluation, and decision-making processes for healthcare programs and services.
+
 System Architecture and Technologies
 The system is developed using modern web technologies to ensure scalability, maintainability, and performance.
 
@@ -39,19 +47,25 @@ This study adopts the Agile Development Methodology, specifically the Scrum Fram
 - Next.js
 The development process consists of six phases:
 
-Planning Phase - Requirements are gathered and analyzed through consultations with Barangay Health Workers (BHWs) to identify functional and non-functional system requirements.
-Design Phase – The system architecture, database structure, user interface, and overall system design are developed based on the identified requirements.
-Development Phase – System functionalities are incrementally implemented through Agile sprints, allowing continuous refinement and validation of features.
-Testing Phase – Functional, integration, and user acceptance testing are conducted to ensure system reliability, accuracy, and usability.
-Deployment Phase – The completed system is deployed within the operational environment of Barangay Gumamela and prepared for end-user utilization.
-Review Phase – System performance and effectiveness are evaluated through stakeholder feedback, providing a basis for future enhancements and continuous improvement.
+**Planning Phase** - Requirements are gathered and analyzed through consultations with Barangay Health Workers (BHWs) to identify functional and non-functional system requirements.
+
+**Design Phase** – The system architecture, database structure, user interface, and overall system design are developed based on the identified requirements.
+
+**Development Phase** – System functionalities are incrementally implemented through Agile sprints, allowing continuous refinement and validation of features.
+
+**Testing Phase** – Functional, integration, and user acceptance testing are conducted to ensure system reliability, accuracy, and usability.
+
+**Deployment Phase** – The completed system is deployed within the operational environment of Barangay Gumamela and prepared for end-user utilization.
+
+**Review Phase** – System performance and effectiveness are evaluated through stakeholder feedback, providing a basis for future enhancements and continuous improvement.
+
 Throughout the development process, Barangay Health Workers actively participate in requirements validation, feature evaluation, and system testing to ensure that the final product accurately reflects the healthcare workflows and operational needs of the barangay.
 
 - Node.js
 - JavaScript
 Database Design
 
-**1. Administrative & Organizational Tables
+# 1. Administrative & Organizational Tables
 puroks
 
 Divides the barangay into its 12 distinct geographic sub-areas and stores a running risk score for each area.
@@ -77,7 +91,7 @@ household_number (VARCHAR | Unique) — Government or local tracking ID for the 
 purok_id (INT | FK) — References puroks.id.
 address_details (TEXT) — Specific address descriptors (street, block, landmark).
 
-**2. Core Resident Data
+# 2. Core Resident Data
 
 residents
 The master list of every citizen living in the barangay, containing personal details, birth dates (for age grouping), and family roles.
@@ -339,40 +353,50 @@ description (TEXT) — System generated or manually typed abstract summary.
 reference_table (VARCHAR) — Name of originating table (Polymorphic tracking).
 reference_id (INT) — Matching record ID from originating table.
 created_at (TIMESTAMP) — Logging execution timestamp.
-System Dependencies
-1. Core Framework & UI (Next.js, React, & Tailwind)
+
+# System Dependencies
+
+1. **Core Framework & UI (Next.js, React, & Tailwind)**
 next – The core full-stack React framework providing hybrid rendering and built-in API routes.
 react & react-dom – The underlying UI library for building modular, stateful dashboard components.
 tailwindcss – A utility-first CSS framework for creating clean, mobile-responsive interfaces for BHWs.
 lucide-react – A modern, lightweight icon library for navigation menus, status tags, and health indicators.
 recharts – A composable charting library built on React components to render real-time Purok risk distributions and disease trends.
-2. Backend, Routing & Server Environment (Node.js & Express)
+
+2. **Backend, Routing & Server Environment (Node.js & Express)**
 express – Fast, unopinionated minimalist web framework used to spin up a dedicated custom backend server alongside Next.js.
 cors – Enables Cross-Origin Resource Sharing, allowing your user interface to communicate securely with your backend server.
 dotenv – Loads system configurations from a .env file to protect secret keys (e.g., Supabase credentials, DeepSeek API keys).
 node-cron – A pure JavaScript task scheduler used to run background jobs (e.g., automated monthly data compiling for the monthly_purok_analytics table).
-3. Database, Real-Time & Authentication (Supabase & PostgreSQL)
+
+3. **Database, Real-Time & Authentication (Supabase & PostgreSQL)**
 @supabase/supabase-js – The official isomorphic client library connecting the application directly to the PostgreSQL instance to handle user session logins, data transactions, and real-time record synchronization.
-4. AI Engine Processing (DeepSeek AI Integration)
+
+4. **AI Engine Processing (DeepSeek AI Integration)**
 openai – The official SDK used to interface seamlessly with DeepSeek's OpenAI-compatible endpoints to feed prompt histories and fetch structured community health recommendations.
-5. API Security & Request Handling
+
+5. **API Security & Request Handling**
 helmet – Helps secure the Express server by setting various crucial HTTP headers to protect sensitive resident health records.
 morgan – An HTTP request logger middleware for Node.js, essential for tracking down broken API routes and diagnostic debugging during development.
-6. Data Validation, Forms, & Utilities
+
+6. **Data Validation, Forms, & Utilities**
 zod – A TypeScript-first schema declaration and validation library to ensure corrupted, empty, or incorrectly formatted medical records never hit your database.
 react-hook-form – Efficient, flexible, and extensible form state manager that speeds up rendering times on slow data connections.
 date-fns – A lightweight utility set for parsing and formatting dates, used to calculate structural demographic sectors (e.g., separating infants from senior citizens via birthdates).
-7. Development Dependencies (devDependencies)
+
+7. **Development Dependencies**(devDependencies)
 nodemon – Automatically monitors application file changes and restarts the backend server dynamically during local testing.
 postcss & autoprefixer – Essential parsing and CSS compiling libraries required by Tailwind CSS to optimize, shrink, and clean code for resource-constrained client hardware.
+
 Project Setup
-1. Database Setup (Supabase)
+1. **Database Setup (Supabase)**
 The application uses Supabase as its backend database and authentication provider.
 
 Step 1: Create a Supabase Project
 Sign in to the Supabase Dashboard.
 Click New Project.
 Enter your project details and wait for the project to finish provisioning.
+
 Step 2: Retrieve API Credentials
 Navigate to: Settings → API Copy the following values:
 
@@ -384,12 +408,14 @@ Open the SQL Editor.
 Create a new query.
 Paste the project's SQL schema.
 Click Run to create the required tables, indexes, and relationships.
+
 Step 4: Configure Row Level Security (RLS)
 After the tables have been created:
 
 Enable Row Level Security (RLS) on all tables.
 Create the necessary RLS policies based on your application's access requirements.
 Verify that unauthorized users cannot directly access protected data.
+
 Project Structure
 Frontend (citicare-frontend)
 * **`id`** (BIGINT | PK, Auto Increment) — Global timeline tracking index identifier.
@@ -441,6 +467,7 @@ Frontend (citicare-frontend)
 
 - **`nodemon`** – Automatically monitors application file changes and restarts the backend server dynamically during local testing.
 - **`postcss`** & **`autoprefixer`** – Essential parsing and CSS compiling libraries required by Tailwind CSS to optimize, shrink, and clean code for resource-constrained client hardware.
+
 
 # Project Setup
 
@@ -544,7 +571,6 @@ citicare-backend/
 ├── .gitignore                 
 ├── package.json               
 └── server.js
-postcss & autoprefixer – Essential parsing and CSS compiling libraries required by Tailwind CSS to optimize, shrink, and clean code for resource-constrained client hardware.
 
 
 # 2. Backend Setup (`citicare-backend`)
@@ -668,5 +694,210 @@ Once both services are running, open the following URLs:
 - **Backend API:** http://localhost:5000
 
 The application is now ready for local development.
+
+# Database SQl
+
+## Part 1 – Core Tables
+
+```sql
+-- ==========================================
+-- USERS
+-- ==========================================
+CREATE TABLE users (
+    id INTEGER PRIMARY KEY GENERATED BY DEFAULT AS IDENTITY,
+    username VARCHAR(255) NOT NULL UNIQUE,
+    password VARCHAR(255) NOT NULL,
+    role VARCHAR(50) NOT NULL,
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT now() NOT NULL
+);
+
+-- ==========================================
+-- PUROKS
+-- ==========================================
+CREATE TABLE puroks (
+    id INTEGER PRIMARY KEY GENERATED BY DEFAULT AS IDENTITY,
+    purok_name VARCHAR(100) NOT NULL,
+    current_risk_score DECIMAL(5,2) DEFAULT 0.00 NOT NULL,
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT now() NOT NULL
+);
+
+-- ==========================================
+-- VACCINES
+-- ==========================================
+CREATE TABLE vaccines (
+    id INTEGER PRIMARY KEY GENERATED BY DEFAULT AS IDENTITY,
+    vaccine_name VARCHAR(100) NOT NULL UNIQUE,
+    total_doses_required INTEGER NOT NULL
+);
+
+-- ==========================================
+-- FOCUS GROUPS
+-- ==========================================
+CREATE TABLE focus_groups (
+    id INTEGER PRIMARY KEY GENERATED BY DEFAULT AS IDENTITY,
+    group_name VARCHAR(100) NOT NULL UNIQUE
+);
+
+-- ==========================================
+-- BARANGAY HEALTH WORKERS (BHWS)
+-- ==========================================
+CREATE TABLE bhws (
+    id INTEGER PRIMARY KEY GENERATED BY DEFAULT AS IDENTITY,
+    user_id INTEGER NOT NULL UNIQUE,
+    first_name VARCHAR(100) NOT NULL,
+    last_name VARCHAR(100) NOT NULL,
+    purok_id INTEGER NOT NULL,
+    contact_number VARCHAR(20),
+    account_status VARCHAR(50) DEFAULT 'Active' NOT NULL
+);
+
+-- ==========================================
+-- HOUSEHOLDS
+-- ==========================================
+CREATE TABLE households (
+    id INTEGER PRIMARY KEY GENERATED BY DEFAULT AS IDENTITY,
+    household_number VARCHAR(100) NOT NULL UNIQUE,
+    purok_id INTEGER NOT NULL,
+    address_details TEXT
+);
+
+-- ==========================================
+-- RESIDENTS
+-- ==========================================
+CREATE TABLE residents (
+    id INTEGER PRIMARY KEY GENERATED BY DEFAULT AS IDENTITY,
+    household_id INTEGER,
+    first_name VARCHAR(100) NOT NULL,
+    middle_name VARCHAR(100),
+    last_name VARCHAR(100) NOT NULL,
+    suffix VARCHAR(20),
+    birth_date DATE NOT NULL,
+    sex VARCHAR(20) NOT NULL,
+    civil_status VARCHAR(50) NOT NULL,
+    contact_number VARCHAR(20),
+    is_household_head BOOLEAN DEFAULT FALSE NOT NULL,
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT now() NOT NULL
+);
+```
+## Part 2 – Health Records
+
+```sql
+-- ==========================================
+-- VITAL SIGNS
+-- ==========================================
+CREATE TABLE vital_signs (
+    id INTEGER PRIMARY KEY GENERATED BY DEFAULT AS IDENTITY,
+    resident_id INTEGER NOT NULL,
+    recorded_by_bhw_id INTEGER NOT NULL,
+    systolic_bp INTEGER,
+    diastolic_bp INTEGER,
+    heart_rate INTEGER,
+    temperature DECIMAL(4,1),
+    weight_kg DECIMAL(5,2),
+    height_cm DECIMAL(5,2),
+    recorded_at TIMESTAMP WITH TIME ZONE DEFAULT now() NOT NULL
+);
+
+-- ==========================================
+-- CHILD IMMUNIZATIONS
+-- ==========================================
+CREATE TABLE child_immunizations (
+    id INTEGER PRIMARY KEY GENERATED BY DEFAULT AS IDENTITY,
+    resident_id INTEGER NOT NULL,
+    vaccine_id INTEGER NOT NULL,
+    vital_signs_id INTEGER,
+    dose_number INTEGER NOT NULL,
+    date_administered DATE NOT NULL,
+    remarks TEXT
+);
+
+-- ==========================================
+-- CHECKUPS AND APPOINTMENTS
+-- ==========================================
+CREATE TABLE checkups_and_appointments (
+    id INTEGER PRIMARY KEY GENERATED BY DEFAULT AS IDENTITY,
+    resident_id INTEGER NOT NULL,
+    assigned_to_bhw_id INTEGER NOT NULL,
+    purpose VARCHAR(255) NOT NULL,
+    scheduled_date DATE NOT NULL,
+    status VARCHAR(50) DEFAULT 'Pending' NOT NULL,
+    remarks TEXT,
+    date_executed TIMESTAMP WITH TIME ZONE
+);
+
+-- ==========================================
+-- HEALTH PROFILES
+-- ==========================================
+CREATE TABLE health_profiles (
+    id INTEGER PRIMARY KEY GENERATED BY DEFAULT AS IDENTITY,
+    resident_id INTEGER NOT NULL UNIQUE,
+    blood_type VARCHAR(10),
+    has_chronic_condition BOOLEAN DEFAULT FALSE NOT NULL,
+    current_risk_score DECIMAL(5,2) DEFAULT 0.00 NOT NULL,
+    risk_level VARCHAR(50) DEFAULT 'Low' NOT NULL,
+    last_calculated_at TIMESTAMP WITH TIME ZONE DEFAULT now() NOT NULL
+);
+
+-- ==========================================
+-- CHRONIC CONDITIONS
+-- ==========================================
+CREATE TABLE chronic_conditions (
+    id INTEGER PRIMARY KEY GENERATED BY DEFAULT AS IDENTITY,
+    resident_id INTEGER NOT NULL,
+    disease_name VARCHAR(150) NOT NULL,
+    date_diagnosed DATE,
+    status VARCHAR(50) DEFAULT 'Active' NOT NULL
+);
+
+-- ==========================================
+-- RESIDENT MEDICATIONS
+-- ==========================================
+CREATE TABLE resident_medications (
+    id INTEGER PRIMARY KEY GENERATED BY DEFAULT AS IDENTITY,
+    resident_id INTEGER NOT NULL,
+    medication_name VARCHAR(150) NOT NULL,
+    dosage_frequency VARCHAR(100) NOT NULL
+);
+
+-- ==========================================
+-- RESIDENT ALLERGENS
+-- ==========================================
+CREATE TABLE resident_allergens (
+    id INTEGER PRIMARY KEY GENERATED BY DEFAULT AS IDENTITY,
+    resident_id INTEGER NOT NULL,
+    allergen VARCHAR(150) NOT NULL,
+    severity_level VARCHAR(50)
+);
+```
+---
+
+## Part 3 – Relationships & Audit Trail
+
+```sql
+-- ==========================================
+-- RESIDENT FOCUS GROUPS
+-- ==========================================
+CREATE TABLE resident_focus_groups (
+    resident_id INTEGER NOT NULL,
+    focus_group_id INTEGER NOT NULL,
+    PRIMARY KEY (resident_id, focus_group_id)
+);
+
+-- ==========================================
+-- MEDICAL HISTORIES
+-- ==========================================
+CREATE TABLE medical_histories (
+    id INTEGER PRIMARY KEY GENERATED BY DEFAULT AS IDENTITY,
+    resident_id INTEGER NOT NULL,
+    event_date DATE NOT NULL,
+    event_type VARCHAR(100) NOT NULL,
+    description TEXT NOT NULL,
+    reference_table VARCHAR(100),
+    reference_id INTEGER,
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT now() NOT NULL
+);
+```
+
+
 
   
