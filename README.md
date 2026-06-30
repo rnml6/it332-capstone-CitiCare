@@ -1794,8 +1794,5 @@ CREATE TABLE medical_histories (
     created_at TIMESTAMP WITH TIME ZONE DEFAULT now() NOT NULL
 );
 ```
-
-
-
 ---
 
