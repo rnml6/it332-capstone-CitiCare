@@ -1532,6 +1532,13 @@ npm install
 
 ---
 
+
+```bash
+npm install
+```
+
+---
+
 ## Step 3: Configure Environment Variables
 
 Create a `.env.local` file in the project's root directory.
