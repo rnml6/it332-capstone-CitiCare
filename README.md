@@ -1532,6 +1532,13 @@ npm install
 
 ---
 
+
+```bash
+npm install
+```
+
+---
+
 ## Step 3: Configure Environment Variables
 
 Create a `.env.local` file in the project's root directory.
@@ -1795,4 +1802,22 @@ CREATE TABLE medical_histories (
 );
 ```
 ---
+
+## Conceptual Framework
+
+The conceptual framework of the CitiCare: Barangay Gumamela Healthcare Monitoring System follows an Input-Process-Output (IPO) model. The Input stage consists of all raw data entered into the system by Barangay Health Workers (BHWs). This includes resident personal information, resident medical history, and resident checkup records. These inputs serve as the foundational data that the system processes to generate meaningful outputs.
+
+The Process stage is divided into various steps. The first is to store and organize all resident data for efficient retrieval. The next is the computation of health risk scores for residents and puroks. Resident health risk scores are computed based on age, chronic conditions, vital signs, and missed checkups, while purok health risk scores are based on the number of residents in each health risk level. The third step is to identify and analyze health trends, which determines monthly health risk level distributions, identifies the most common diseases per purok, and identifies the number of health risk levels per purok. An additional step is generating recommendations, which uses the outputs from previous steps to provide suggestions for BHWs.
+
+The Output stage delivers the final results to BHWs. These include accurate health reports, a purok priority list, a prioritized list of residents who need immediate attention, and health trends analytics, which are used in a dashboard to provide a visual presentation of data, as well as AI-generated recommendations for monthly, quarterly, and annual schedules. This framework shows how CitiCare processes raw residents data to obtain insights within a structured, sequential process that allows Barangay Gumamela to shift its manual, inefficient healthcare management to a proactive, data-driven system.
+
+## AI Integration Design
+
+The AI integration layer of CitiCare features a specialized Health Recommendation Engine that transforms resident data into actionable community health insights. This component utilizes the DeepSeek large language model API to provide intelligent decision support for Barangay Health Workers (BHWs). The integration uses a client-side inference approach via the DeepSeek API, enabling the system to process complex medical histories and health trends.
+
+AI-Powered Health Recommendation Engine
+The Health Recommendation Engine serves as a proactive monitoring tool, generating data-driven suggestions to improve healthcare delivery in Barangay Gumamela. The engine's primary purpose is to analyze structured health data, including resident medical histories, chronic conditions, and vital signs, to identify priority cases and emerging community health patterns. By processing these inputs, the AI generates specific recommendations for BHWs, such as identifying high- and critical-risk residents who require urgent home visits or LGU referrals, highlighting puroks with rising disease trends, and suggesting medicine procurement priorities based on seasonal illness trends.
+
+Integration of the DeepSeek model will be achieved through using designed prompts that turn data from the barangay's PostgreSQL database into meaningful input for the API. Whenever a BHW accesses the system, it gathers relevant health details, such as medical histories and existing conditions, and it sends a secure request to the DeepSeek API. The model returns a structured recommendation, which the system translates and displays within the CitiCare interface. To keep recommendations accurate and locally appropriate, the system uses a custom prompt that limits the AI's reasoning to community health guidelines and Barangay Gumamela's specific needs. These recommendations are updated on a regular schedule, specifically monthly, quarterly, and yearly. This ensures barangay leaders always have current and useful information for planning resources and running preventive health programs.
+
 
