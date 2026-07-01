@@ -1532,6 +1532,13 @@ npm install
 
 ---
 
+
+```bash
+npm install
+```
+
+---
+
 ## Step 3: Configure Environment Variables
 
 Create a `.env.local` file in the project's root directory.
@@ -1795,4 +1802,14 @@ CREATE TABLE medical_histories (
 );
 ```
 ---
+
+## Conceptual Framework
+
+The conceptual framework of the CitiCare: Barangay Gumamela Healthcare Monitoring System follows an Input-Process-Output (IPO) model. The Input stage consists of all raw data entered into the system by Barangay Health Workers (BHWs). This includes resident personal information, resident medical history, and resident checkup records. These inputs serve as the foundational data that the system processes to generate meaningful outputs.
+
+The Process stage is divided into various steps. The first is to store and organize all resident data for efficient retrieval. The next is the computation of health risk scores for residents and puroks. Resident health risk scores are computed based on age, chronic conditions, vital signs, and missed checkups, while purok health risk scores are based on the number of residents in each health risk level. The third step is to identify and analyze health trends, which determines monthly health risk level distributions, identifies the most common diseases per purok, and identifies the number of health risk levels per purok. An additional step is generating recommendations, which uses the outputs from previous steps to provide suggestions for BHWs.
+
+The Output stage delivers the final results to BHWs. These include accurate health reports, a purok priority list, a prioritized list of residents who need immediate attention, and health trends analytics, which are used in a dashboard to provide a visual presentation of data, as well as AI-generated recommendations for monthly, quarterly, and annual schedules. This framework shows how CitiCare processes raw residents data to obtain insights within a structured, sequential process that allows Barangay Gumamela to shift its manual, inefficient healthcare management to a proactive, data-driven system.
+
+
 
