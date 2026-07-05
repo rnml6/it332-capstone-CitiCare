@@ -40,11 +40,14 @@ Render
 Vercel
 Version Control
 GitHub
+
 System Development Methodology
 This study adopts the Agile Development Methodology, specifically the Scrum Framework, to guide the design and development of the CitiCare Healthcare Monitoring System. Agile is selected due to its iterative development approach, emphasis on stakeholder collaboration, and ability to accommodate evolving system requirements throughout the development lifecycle.
 
 - React
 - Next.js
+
+
 The development process consists of six phases:
 
 **Planning Phase** - Requirements are gathered and analyzed through consultations with Barangay Health Workers (BHWs) to identify functional and non-functional system requirements.
