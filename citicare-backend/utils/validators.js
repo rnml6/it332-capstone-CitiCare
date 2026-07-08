@@ -41,7 +41,6 @@ const validateChangePassword = [
 ];
 
 // ==================== Resident Validators ====================
-// ==================== Resident Validators ====================
 const validateResident = [
     body('first_name')
         .notEmpty()
@@ -69,7 +68,6 @@ const validateResident = [
         .optional()
         .isUUID()
         .withMessage('Invalid household ID'),
-    // Add household number validation for creating new household
     body('household_number')
         .optional()
         .isString()
@@ -92,7 +90,6 @@ const validateResident = [
         .withMessage('is_household_head must be a boolean'),
 ];
 
-// Also add a specific validator for creating a resident with a new household
 const validateResidentWithNewHousehold = [
     ...validateResident,
     body('household_number')
@@ -276,15 +273,17 @@ const validateHouseholdUpdate = [
         .trim(),
 ];
 
+// ==================== AI Recommendation Validators ====================
+// REMOVED: param('residentId') validation - now handled in controller
+const validateAIRecommendation = [
+    body('period')
+        .isIn(['monthly', 'quarterly', 'annual'])
+        .withMessage('Period must be monthly, quarterly, or annual'),
+];
+
 const validateDateRange = [
     query('startDate').optional().isDate().withMessage('Invalid start date'),
     query('endDate').optional().isDate().withMessage('Invalid end date'),
-];
-
-// ==================== AI Recommendation Validators ====================
-const validateAIRecommendation = [
-    param('residentId').isUUID().withMessage('Invalid resident ID'),
-    body('period').isIn(['monthly', 'quarterly', 'annual']).withMessage('Period must be monthly, quarterly, or annual'),
 ];
 
 // ==================== Export All Validators ====================
@@ -297,6 +296,7 @@ module.exports = {
     // Resident
     validateResident,
     validateResidentUpdate,
+    validateResidentWithNewHousehold,
     // Health Profile
     validateHealthProfile,
     // Vital Signs
@@ -324,6 +324,7 @@ module.exports = {
     validateDateRange,
     // AI
     validateAIRecommendation,
+    // Household
     validateHousehold,
     validateHouseholdUpdate,
 };
